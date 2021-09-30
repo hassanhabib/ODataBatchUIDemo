@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
@@ -25,17 +26,14 @@ namespace ODataBatchUIDemo.Pages
 
         public async Task OnBatchSave(BeforeBatchSaveArgs<Student> args)
         {
-            int counter = 0;
             var batchRequests = new BatchRequests();
             batchRequests.Requests = new List<Request>();
 
             foreach (Student student in args.BatchChanges.AddedRecords)
             {
-                counter++;
-
                 batchRequests.Requests.Add(new Request
                 {
-                    Id = $"{counter}",
+                    Id = $"{Guid.NewGuid()}",
                     Headers = new Header
                     {
                         ContentType = "application/json"
@@ -48,11 +46,9 @@ namespace ODataBatchUIDemo.Pages
 
             foreach (Student student in args.BatchChanges.ChangedRecords)
             {
-                counter++;
-
                 batchRequests.Requests.Add(new Request
                 {
-                    Id = $"{counter}",
+                    Id = $"{Guid.NewGuid()}",
                     Headers = new Header
                     {
                         ContentType = "application/json"
@@ -65,11 +61,9 @@ namespace ODataBatchUIDemo.Pages
 
             foreach (Student student in args.BatchChanges.DeletedRecords)
             {
-                counter++;
-
                 batchRequests.Requests.Add(new Request
                 {
-                    Id = $"{counter}",
+                    Id = $"{Guid.NewGuid()}",
                     Headers = new Header
                     {
                         ContentType = "application/json"
