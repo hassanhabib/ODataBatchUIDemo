@@ -5,14 +5,12 @@
 <div class="col-lg-12 control-section">
 	<div class="content-wrapper">
 		<div class="row">
-			<SfGrid @ref=Grid
-					DataSource="@Students"
-					Toolbar="@(new List<string>() { "Add", "Delete", "Update", "Cancel" })"
-					AllowPaging="true">
+			<SfGrid DataSource=Students
+					Toolbar="@(new List<string> {"Add", "Delete", "Update", "Cancel"})">
 
-				<GridEditSettings AllowAdding="true"
-								  AllowDeleting="true"
-								  AllowEditing="true"
+				<GridEditSettings AllowAdding=true
+								  AllowDeleting=true
+								  AllowEditing=true
 								  Mode="EditMode.Batch" />
 
 				<GridEvents TValue=Student
@@ -21,25 +19,23 @@
 				<GridColumns>
 					<GridColumn Field=@nameof(Student.Id)
 								HeaderText="ID"
-								IsPrimaryKey="true"
-								ValidationRules="@(new ValidationRules{ Required=true})"
-								TextAlign="TextAlign.Right"
-								Width="140" />
+								IsPrimaryKey=true
+								ValidationRules="@(new ValidationRules {Required = true})"
+								TextAlign="TextAlign.Left" />
 
 					<GridColumn Field=@nameof(Student.FirstName)
 								HeaderText="First Name"
-								ValidationRules="@(new ValidationRules{ Required=true})"
-								Width="150" />
+								ValidationRules="@(new ValidationRules {Required = true})"
+								TextAlign="TextAlign.Left" />
 
 					<GridColumn Field=@nameof(Student.MiddleName)
 								HeaderText="Middle Name"
-								ValidationRules="@(new ValidationRules{ Required=true})"
-								Width="150" />
+								TextAlign="TextAlign.Left" />
 
 					<GridColumn Field=@nameof(Student.LastName)
 								HeaderText="Last Name"
-								ValidationRules="@(new ValidationRules{ Required=true})"
-								Width="150" />
+								ValidationRules="@(new ValidationRules {Required = true})"
+								TextAlign="TextAlign.Left" />
 				</GridColumns>
 			</SfGrid>
 		</div>

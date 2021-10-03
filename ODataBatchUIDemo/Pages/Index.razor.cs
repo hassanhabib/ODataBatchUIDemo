@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
@@ -13,15 +12,14 @@ namespace ODataBatchUIDemo.Pages
     public partial class Index : ComponentBase
     {
         [Inject]
-        public IOtripleSApiBroker apiBroker { get; set; }
+        public IOtripleSApiBroker ApiBroker { get; set; }
 
         public List<Student> Students { get; set; }
-        public SfGrid<Student> Grid { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
             this.Students =
-                await this.apiBroker.GetAllStudentsAsync();
+                await this.ApiBroker.GetAllStudentsAsync();
         }
 
         public async Task OnBatchSave(BeforeBatchSaveArgs<Student> args)
@@ -29,15 +27,17 @@ namespace ODataBatchUIDemo.Pages
             var batchRequests = new BatchRequests();
             batchRequests.Requests = new List<Request>();
 
-            foreach (Student student in args.BatchChanges.AddedRecords)
+            foreach(Student student in args.BatchChanges.AddedRecords)
             {
                 batchRequests.Requests.Add(new Request
                 {
-                    Id = $"{Guid.NewGuid()}",
+                    Id = Guid.NewGuid().ToString(),
+
                     Headers = new Header
                     {
                         ContentType = "application/json"
                     },
+
                     Method = Method.POST,
                     Body = student,
                     Url = "students"
@@ -48,11 +48,13 @@ namespace ODataBatchUIDemo.Pages
             {
                 batchRequests.Requests.Add(new Request
                 {
-                    Id = $"{Guid.NewGuid()}",
+                    Id = Guid.NewGuid().ToString(),
+
                     Headers = new Header
                     {
                         ContentType = "application/json"
                     },
+
                     Method = Method.PUT,
                     Body = student,
                     Url = "students"
@@ -63,18 +65,20 @@ namespace ODataBatchUIDemo.Pages
             {
                 batchRequests.Requests.Add(new Request
                 {
-                    Id = $"{Guid.NewGuid()}",
+                    Id = Guid.NewGuid().ToString(),
+
                     Headers = new Header
                     {
                         ContentType = "application/json"
                     },
+
                     Method = Method.DELETE,
                     Body = student,
                     Url = $"students/{student.Id}"
                 });
             }
 
-            await this.apiBroker.PostBatchStudentsAsync(batchRequests);
+            await this.ApiBroker.PostBatchStudentsAsync(batchRequests);
         }
     }
 }
